@@ -1,0 +1,14 @@
+C4Container
+    title Container Diagram (C4) - Cloud Task Manager
+
+    Person(user, "User", "Application user managing tasks")
+
+    System_Boundary(system, "Cloud Task Manager [ENTERPRISE]") {
+        Container(frontend, "Frontend (React 19)", "Vite / HTTPS", "User interface layer")
+        Container(backend, "Backend (API)", "Node.js / Express", "Business logic, REST API")
+        ContainerDb(database, "Database (SQL)", "Azure SQL Serverless", "Stores tasks and users")
+    }
+
+    Rel(user, frontend, "Uses", "HTTPS (:443)")
+    Rel(frontend, backend, "Calls", "JSON/REST HTTP (:3000)")
+    Rel(backend, database, "Reads/Writes", "TCP (:1433)")
