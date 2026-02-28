@@ -1,0 +1,35 @@
+services:
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    ports:
+      - "8080:80"
+    depends_on:
+      - backend
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    environment:
+      - DB_HOST=database
+      - DB_PORT=1433
+      - DB_NAME=cloudtaskmanager
+      - DB_USER=sa
+      - DB_PASSWORD=Admin1234!
+      - PORT=3000
+    depends_on:
+      - database
+
+  database:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    ports:
+      - "1433:1433"
+    environment:
+      - ACCEPT_EULA=Y
+      - SA_PASSWORD=Admin1234!
+      - MSSQL_PID=Developer
