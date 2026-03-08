@@ -1,35 +1,31 @@
+version: "3.9"
+ 
 services:
-
   frontend:
-    build:
-      context: ./frontend
-      dockerfile: Dockerfile
+    build: ./frontend
     ports:
       - "8080:80"
-    depends_on:
-      - backend
-
+    networks:
+      - cloud-network
+ 
   backend:
-    build:
-      context: ./backend
-      dockerfile: Dockerfile
+    build: ./backend
     ports:
-      - "3000:3000"
+      - "8081:80"
+    networks:
+      - cloud-network
+ 
+  db:
+    image: mcr.microsoft.com/azure-sql-edge
+    container_name: cloud-db
     environment:
-      - DB_HOST=database
-      - DB_PORT=1433
-      - DB_NAME=cloudtaskmanager
-      - DB_USER=sa
-      - DB_PASSWORD=Admin1234!
-      - PORT=3000
-    depends_on:
-      - database
-
-  database:
-    image: mcr.microsoft.com/mssql/server:2022-latest
+      SA_PASSWORD: "StrongPassword123!"
+      ACCEPT_EULA: "Y"
     ports:
       - "1433:1433"
-    environment:
-      - ACCEPT_EULA=Y
-      - SA_PASSWORD=Admin1234!
-      - MSSQL_PID=Developer
+    networks:
+      - cloud-network
+ 
+networks:
+  cloud-network:
+    driver: bridge

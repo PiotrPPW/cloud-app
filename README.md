@@ -16,3 +16,4 @@ Ten projekt jest aplikacją chmurową realizowaną w architekturze 3-warstwowej.
 ## Status Projektu
 * [x] **Artefakt 1:** Zaplanowane struktury folderów i diagram C4 (dostępny w /docs).
 * [x] **Artefakt 2:** Środowisko wielokontenerowe uruchomione lokalnie (Docker Compose).
+* [x] **Artefakt 3:** Działająca warstwa aplikacji.

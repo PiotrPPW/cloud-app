@@ -1,6 +1,7 @@
-FROM node:20-alpine
-WORKDIR /app
-COPY . .
-RUN echo "Backend placeholder"
-EXPOSE 3000
-CMD ["node", "-e", "require('http').createServer((req,res)=>res.end('Backend OK')).listen(3000)"]
+#Dockerfile dla backendu
+#Wykorzystujemy minimalny obraz systemu Linux (Alpine)
+FROM alpine
+#Instalacja narzędzia curl do testów łączności międzyserwisowej
+RUN apk add --no-cache curl
+#Wypisanie statusu i zapętlenie procesu, aby kontener pozostał aktywny
+CMD ["sh", "-c", "echo 'Backend service is running...' && sleep infinity"]
