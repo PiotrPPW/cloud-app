@@ -39,7 +39,7 @@ using (var scope = app.Services.CreateScope())
     {
         var context = services.GetRequiredService<AppDbContext>();
         // 1. Tworzy bazę i tabele, jeśli ich nie ma
-        context.Database.EnsureCreated();
+        context.Database.Migrate();
         // 2. Dodaje startowe dane, jeśli tabela jest pusta (opcjonalne, ale fajne)
         if (!context.Tasks.Any())
         {

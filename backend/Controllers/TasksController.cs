@@ -2,6 +2,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using CloudBackend.Data;
 using CloudBackend.Models;
+using CloudBackend.DTOs;
+
 
 namespace CloudBackend.Controllers;
 
@@ -17,18 +19,34 @@ public class TasksController : ControllerBase
         _context = context;
     }
 
-    [HttpGet] // 1. Lista (READ ALL)
-    public async Task<ActionResult> GetAll()
+    [HttpGet]
+	public async Task<ActionResult> GetAll()
+	{
+    var tasks = await _context.Tasks.ToListAsync();
+    var dtos = tasks.Select(t => new TaskReadDto
     {
-        return Ok(await _context.Tasks.ToListAsync());
-    }
+        Id = t.Id,
+        Name = t.Name,
+        IsCompleted = t.IsCompleted
+    });
+        return Ok(dtos);
+	}
 
-    [HttpGet("{id}")] // 2. Szczegóły (READ ONE)
+
+    [HttpGet("{id}")]
     public async Task<ActionResult> GetById(int id)
     {
-        var task = await _context.Tasks.FindAsync(id);
-        return task == null ? NotFound() : Ok(task);
+    var task = await _context.Tasks.FindAsync(id);
+    if (task == null) return NotFound();
+    var dto = new TaskReadDto
+    {
+        Id = task.Id,
+        Name = task.Name,
+        IsCompleted = task.IsCompleted
+    };
+        return Ok(dto);
     }
+
 
     [HttpPost] // 3. Dodaj (CREATE)
     public async Task<ActionResult> Create(CloudTask task)
