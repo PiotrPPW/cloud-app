@@ -19,4 +19,5 @@ Ten projekt jest aplikacją chmurową realizowaną w architekturze 3-warstwowej.
 * [x] **Artefakt 3:** Działająca warstwa aplikacji.
 * [x] **Artefakt 4:** Działająca warstwa logiki backendu (.NET 9 + SQL Server w Dockerze).
 * [x] **Artefakt 5:** System gotowy na chmurę – DTO (TaskReadDto), named volumes (sql-data), migracje EF Core, formularz dodawania zadań w React.
-* [ ] **Artefakt 6:** Wdrożenie aplikacji w Azure.
+* [x] **Artefakt 6:** Wdrożenie aplikacji w Azure (bez Frontendu).\
+* [ ] **Artefakt 6.2:** Wdrożenie Frontendu do aplikacji w Azure.
