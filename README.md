@@ -22,3 +22,4 @@ Ten projekt jest aplikacją chmurową realizowaną w architekturze 3-warstwowej.
 * [x] **Artefakt 6:** Wdrożenie aplikacji w Azure (bez Frontendu).\
 * [x] **Artefakt 6.2:** Wdrożenie Frontendu do aplikacji w Azure.
 * [x] **Artefakt 7:** Zabezpieczenie aplikacji – Azure Key Vault, Managed Identity, eliminacja haseł z kodu.
+* [x] **Artefakt 8:** CI/CD – xUnit testy, GitHub Actions, przycisk Usuń.
