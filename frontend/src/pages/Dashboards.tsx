@@ -27,6 +27,15 @@ const Dashboard = () => {
     fetchTasks();
   }, []);
 
+  const handleDeleteTask = (id: number) => {
+    api.delete(`/tasks/${id}`)
+      .then(() => fetchTasks())
+      .catch((err: any) => {
+        console.error("Błąd usuwania:", err);
+        setError("Nie udało się usunąć zadania.");
+      });
+  };
+
   const handleAddTask = () => {
     if (!newTaskName.trim()) return;
     api.post('/tasks', { name: newTaskName, isCompleted: false })
@@ -78,6 +87,7 @@ const Dashboard = () => {
               textAlign: 'left'
             }}>
               <strong>{item.name}</strong> {item.isCompleted ? '✅' : '⏳'}
+              <button onClick={() => handleDeleteTask(item.id)} style={{ marginLeft: '10px', background: '#dc3545', color: 'white', border: 'none', borderRadius: '4px', cursor: 'pointer', padding: '2px 8px' }}>Usuń</button>
             </li>
           ))}
         </ul>
