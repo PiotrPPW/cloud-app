@@ -1,8 +1,15 @@
+using Azure.Identity;
 using CloudBackend.Data;
 using CloudBackend.Models;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
+
+if (builder.Environment.IsProduction())
+{
+    var keyVaultEndpoint = new Uri("https://cloud-app-kv-57207.vault.azure.net/");
+    builder.Configuration.AddAzureKeyVault(keyVaultEndpoint, new DefaultAzureCredential());
+}
 
 // --- SEKCJA USŁUG (Dependency Injection) ---
 
@@ -14,7 +21,8 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 // 3. Pobranie Connection Stringa (zmiennej środowiskowej z Dockera)
-var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+var connectionString = builder.Configuration["DbConnectionString"]
+    ?? builder.Configuration.GetConnectionString("DefaultConnection");
 
 // 4. Rejestracja bazy danych PostgreSQL
 builder.Services.AddDbContext<AppDbContext>(options =>
@@ -66,13 +74,9 @@ app.UseSwaggerUI(c =>
     c.RoutePrefix = string.Empty;
 });
 
-// Ważne: W Dockerze często używamy HTTP wewnątrz sieci,
-// więc wyłączamy wymuszone przekierowanie na HTTPS dla uproszczenia nauki
-// app.UseHttpsRedirection();
-
 app.UseCors();
 
-// Mapowanie kontrolerów (to sprawi, że TasksController zacznie działać)
+// Mapowanie kontrolerów
 app.MapControllers();
 
 app.Run();
