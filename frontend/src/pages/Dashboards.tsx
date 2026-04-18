@@ -59,7 +59,7 @@ const Dashboard = () => {
         />
         <button
           onClick={handleAddTask}
-          style={{ padding: '8px 16px', background: '#007bff', color: 'white', border: 'none', borderRadius: '5px', cursor: 'pointer' }}
+          style={{ padding: '8px 16px', background: '#28a745', color: 'white', border: 'none', borderRadius: '5px', cursor: 'pointer' }}
         >
           Dodaj Zadanie
         </button>
